@@ -49,8 +49,8 @@ final class PhotosViewController : UICollectionViewController {
     var deselectionClosure: ((_ asset: PHAsset) -> Void)?
     var cancelClosure: ((_ assets: [PHAsset]) -> Void)?
     var finishClosure: ((_ assets: [PHAsset]) -> Void)?
-    var sendClosure: ((UIImage)->())?
-    fileprivate var localSendClosure: ((UIImage)->())?
+    var sendClosure: ((PHAsset)->())?
+    fileprivate var localSendClosure: ((PHAsset)->())?
     
     var doneBarButton: UIBarButtonItem?
     var cancelBarButton: UIBarButtonItem?
@@ -91,7 +91,7 @@ final class PhotosViewController : UICollectionViewController {
         
         super.init(collectionViewLayout: GridCollectionViewLayout())
         
-        localSendClosure = { [weak self] (image: UIImage) -> Void in
+        localSendClosure = { [weak self] (image: PHAsset) -> Void in
             if let weakSelf = self {
                 if let closure = weakSelf.sendClosure {
                     closure(image)
@@ -134,6 +134,8 @@ final class PhotosViewController : UICollectionViewController {
         titleLabel.text = "Camera Roll"
         titleLabel.font = UIFont.systemFont(ofSize: 16)
         navigationItem.titleView = titleLabel
+        
+        cancelBarButton?.setTitleTextAttributes([ NSFontAttributeName : UIFont.systemFont(ofSize: 16) ], for: .normal)
         
         collectionView?.backgroundColor = UIColor.init(red: 0xF7/255.0, green: 0xF7/255.0, blue: 0xF7/255.0, alpha: 1)
 
@@ -219,12 +221,7 @@ final class PhotosViewController : UICollectionViewController {
                 PHCachingImageManager.default().requestImage(for: asset, targetSize:newSize, contentMode: .aspectFit, options: options) { (result, _) in
                     imageView.image = result
                 }
-                
-                let originalImageOptions = PHImageRequestOptions()
-                options.isSynchronous = false
-                PHCachingImageManager.default().requestImage(for: asset, targetSize:PHImageManagerMaximumSize, contentMode: .aspectFit, options: options) { (result, _) in
-                    vc.originalImage = result
-                }
+                vc.asset = asset
             }
             
             // Setup animation

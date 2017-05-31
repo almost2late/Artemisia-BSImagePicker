@@ -21,16 +21,17 @@
 // SOFTWARE.
 
 import UIKit
+import Photos
 
 final class PreviewViewController : UIViewController {
     var imageView: UIImageView?
     fileprivate var fullscreen = false
-    fileprivate var sendClojure: ((UIImage)->())?
+    fileprivate var sendClojure: ((PHAsset)->())?
     
-    var originalImage: UIImage?
+    var asset: PHAsset?
     var sendButton: UIButton?
     
-    convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, sendClojure aSendClojure: @escaping (UIImage)->()) {
+    convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, sendClojure aSendClojure: @escaping (PHAsset)->()) {
         self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         sendClojure = aSendClojure
@@ -64,9 +65,9 @@ final class PreviewViewController : UIViewController {
                                             width: view.bounds.size.width,
                                             height: buttonHeight))
         button.backgroundColor = UIColor.white
-        button.setTitle("Send", for: .normal)
+        let attributedTitle = NSAttributedString.init(string: "Send", attributes: [ NSFontAttributeName : UIFont.systemFont(ofSize: 20), NSForegroundColorAttributeName : UIColor.init(red: 0x3E/255.0, green: 0x75/255.0, blue: 0xFF/255.0, alpha: 1) ])
+        button.setAttributedTitle(attributedTitle, for: .normal)
         button.addTarget(self, action: "sendButtonPressed", for: .touchUpInside)
-        button.setTitleColor(UIColor.init(red: 0x3E/255.0, green: 0x75/255.0, blue: 0xFF/255.0, alpha: 1), for:.normal)
         view.addSubview(button)
         
         let upperBorder = CALayer()
@@ -78,8 +79,8 @@ final class PreviewViewController : UIViewController {
     }
     
     func sendButtonPressed() {
-        if let closure = sendClojure, let image = originalImage {
-            closure(image)
+        if let closure = sendClojure, let anAsset = asset {
+            closure(anAsset)
         }
     }
     

@@ -41,7 +41,7 @@ open class BSImagePickerViewController : UINavigationController {
     /**
      Cancel button
      */
-    open var cancelButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+    open var cancelButton: UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)//UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
     
     /**
      Default selections
@@ -68,7 +68,7 @@ open class BSImagePickerViewController : UINavigationController {
     
     static let bundle: Bundle = Bundle(path: Bundle(for: PhotosViewController.self).path(forResource: "BSImagePicker", ofType: "bundle")!)!
     
-    public func setSendClosure(sendClosure: @escaping ((UIImage)->())) {
+    public func setSendClosure(sendClosure: @escaping ((PHAsset)->())) {
         photosViewController.sendClosure = sendClosure
     }
     
