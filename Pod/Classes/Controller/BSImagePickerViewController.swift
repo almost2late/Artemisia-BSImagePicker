@@ -68,19 +68,25 @@ open class BSImagePickerViewController : UINavigationController {
     
     static let bundle: Bundle = Bundle(path: Bundle(for: PhotosViewController.self).path(forResource: "BSImagePicker", ofType: "bundle")!)!
     
+    public func setSendClosure(sendClosure: @escaping ((UIImage)->())) {
+        photosViewController.sendClosure = sendClosure
+    }
+    
     lazy var photosViewController: PhotosViewController = {
         let vc = PhotosViewController(fetchResults: self.fetchResults,
                                       defaultSelections: self.defaultSelections,
                                       settings: self.settings)
         
-        vc.doneBarButton = self.doneButton
+        if !self.settings.singleChoiceMode {
+            vc.doneBarButton = self.doneButton
+            vc.albumTitleView = self.albumTitleView
+        }
         vc.cancelBarButton = self.cancelButton
-        vc.albumTitleView = self.albumTitleView
         
         return vc
     }()
     
-    class func authorize(_ status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus(), fromViewController: UIViewController, completion: @escaping (_ authorized: Bool) -> Void) {
+    public class func authorize(_ status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus(), fromViewController: UIViewController, completion: @escaping (_ authorized: Bool) -> Void) {
         switch status {
         case .authorized:
             // We are authorized. Run block
@@ -131,6 +137,17 @@ open class BSImagePickerViewController : UINavigationController {
 
 // MARK: ImagePickerSettings proxy
 extension BSImagePickerViewController: BSImagePickerSettings {
+    /**
+     Hide done button
+     */
+    public var singleChoiceMode: Bool {
+        get {
+            return settings.singleChoiceMode
+        }
+        set {
+            settings.singleChoiceMode = singleChoiceMode
+        }
+    }
 
 
     /**

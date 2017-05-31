@@ -31,6 +31,10 @@ final class PhotoCell: UICollectionViewCell {
     @IBOutlet weak var selectionOverlayView: UIView!
     @IBOutlet weak var selectionView: SelectionView!
     
+    override func awakeFromNib() {
+        imageView.contentMode = .scaleAspectFill
+    }
+    
     weak var asset: PHAsset?
     var settings: BSImagePickerSettings {
         get {

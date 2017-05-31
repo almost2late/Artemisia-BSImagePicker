@@ -28,7 +28,7 @@ final class ZoomAnimator : NSObject, UIViewControllerAnimatedTransitioning {
     var destinationImageView: UIImageView?
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
+        return 0.2
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {

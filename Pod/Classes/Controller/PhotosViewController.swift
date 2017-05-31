@@ -49,6 +49,8 @@ final class PhotosViewController : UICollectionViewController {
     var deselectionClosure: ((_ asset: PHAsset) -> Void)?
     var cancelClosure: ((_ assets: [PHAsset]) -> Void)?
     var finishClosure: ((_ assets: [PHAsset]) -> Void)?
+    var sendClosure: ((UIImage)->())?
+    fileprivate var localSendClosure: ((UIImage)->())?
     
     var doneBarButton: UIBarButtonItem?
     var cancelBarButton: UIBarButtonItem?
@@ -78,7 +80,7 @@ final class PhotosViewController : UICollectionViewController {
     }()
     
     fileprivate lazy var previewViewContoller: PreviewViewController? = {
-        return PreviewViewController(nibName: nil, bundle: nil)
+        return PreviewViewController(nibName: nil, bundle: nil, sendClojure: self.localSendClosure!)
     }()
     
     required init(fetchResults: [PHFetchResult<PHAssetCollection>], defaultSelections: PHFetchResult<PHAsset>? = nil, settings aSettings: BSImagePickerSettings) {
@@ -88,6 +90,14 @@ final class PhotosViewController : UICollectionViewController {
         settings = aSettings
         
         super.init(collectionViewLayout: GridCollectionViewLayout())
+        
+        localSendClosure = { [weak self] (image: UIImage) -> Void in
+            if let weakSelf = self {
+                if let closure = weakSelf.sendClosure {
+                    closure(image)
+                }
+            }
+        }
         
         PHPhotoLibrary.shared().register(self)
     }
@@ -118,7 +128,14 @@ final class PhotosViewController : UICollectionViewController {
         albumTitleView?.albumButton?.addTarget(self, action: #selector(PhotosViewController.albumButtonPressed(_:)), for: .touchUpInside)
         navigationItem.leftBarButtonItem = cancelBarButton
         navigationItem.rightBarButtonItem = doneBarButton
-        navigationItem.titleView = albumTitleView
+//        navigationItem.titleView = albumTitleView
+        
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 25))
+        titleLabel.text = "Camera Roll"
+        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        navigationItem.titleView = titleLabel
+        
+        collectionView?.backgroundColor = UIColor.init(red: 0xF7/255.0, green: 0xF7/255.0, blue: 0xF7/255.0, alpha: 1)
 
         if let album = albumsDataSource.fetchResults.first?.firstObject {
             initializePhotosDataSource(album, selections: defaultSelections)
@@ -188,6 +205,38 @@ final class PhotosViewController : UICollectionViewController {
         present(albumsViewController, animated: true, completion: nil)
     }
     
+    func showPreview(indexPath: IndexPath?) {
+        if let vc = previewViewContoller, let indexPath = indexPath, let cell = collectionView?.cellForItem(at: indexPath) as? PhotoCell, let asset = cell.asset {
+            // Setup fetch options to be synchronous
+            let options = PHImageRequestOptions()
+            options.isSynchronous = true
+            
+            // Load image for preview
+            if let imageView = vc.imageView {
+                var newSize = imageView.frame.size
+                newSize.width *= 2
+                newSize.height *= 2
+                PHCachingImageManager.default().requestImage(for: asset, targetSize:newSize, contentMode: .aspectFit, options: options) { (result, _) in
+                    imageView.image = result
+                }
+                
+                let originalImageOptions = PHImageRequestOptions()
+                options.isSynchronous = false
+                PHCachingImageManager.default().requestImage(for: asset, targetSize:PHImageManagerMaximumSize, contentMode: .aspectFit, options: options) { (result, _) in
+                    vc.originalImage = result
+                }
+            }
+            
+            // Setup animation
+            expandAnimator.sourceImageView = cell.imageView
+            expandAnimator.destinationImageView = vc.imageView
+            shrinkAnimator.sourceImageView = vc.imageView
+            shrinkAnimator.destinationImageView = cell.imageView
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     func collectionViewLongPressed(_ sender: UIGestureRecognizer) {
         if sender.state == .began {
             // Disable recognizer while we are figuring out location and pushing preview
@@ -198,25 +247,8 @@ final class PhotosViewController : UICollectionViewController {
             let location = sender.location(in: collectionView)
             let indexPath = collectionView?.indexPathForItem(at: location)
             
-            if let vc = previewViewContoller, let indexPath = indexPath, let cell = collectionView?.cellForItem(at: indexPath) as? PhotoCell, let asset = cell.asset {
-                // Setup fetch options to be synchronous
-                let options = PHImageRequestOptions()
-                options.isSynchronous = true
-                
-                // Load image for preview
-                if let imageView = vc.imageView {
-                    PHCachingImageManager.default().requestImage(for: asset, targetSize:imageView.frame.size, contentMode: .aspectFit, options: options) { (result, _) in
-                        imageView.image = result
-                    }
-                }
-                
-                // Setup animation
-                expandAnimator.sourceImageView = cell.imageView
-                expandAnimator.destinationImageView = vc.imageView
-                shrinkAnimator.sourceImageView = vc.imageView
-                shrinkAnimator.destinationImageView = cell.imageView
-                
-                navigationController?.pushViewController(vc, animated: true)
+            if settings.singleChoiceMode == false {
+                showPreview(indexPath: indexPath)
             }
             
             // Re-enable recognizer, after animation is done
@@ -351,7 +383,7 @@ extension PhotosViewController {
         let asset = photosDataSource.fetchResult.object(at: indexPath.row)
 
         // Select or deselect?
-        if let index = photosDataSource.selections.index(of: asset) { // Deselect
+        if let index = photosDataSource.selections.index(of: asset), settings.singleChoiceMode == false { // Deselect
             // Deselect asset
             photosDataSource.selections.remove(at: index)
 
@@ -370,12 +402,14 @@ extension PhotosViewController {
             collectionView.reloadItems(at: selectedIndexPaths)
             UIView.setAnimationsEnabled(true)
 
-            cell.photoSelected = false
-
-            // Call deselection closure
-            if let closure = deselectionClosure {
-                DispatchQueue.global().async {
-                    closure(asset)
+            if !settings.singleChoiceMode {
+                cell.photoSelected = false
+                
+                // Call deselection closure
+                if let closure = deselectionClosure {
+                    DispatchQueue.global().async {
+                        closure(asset)
+                    }
                 }
             }
         } else if photosDataSource.selections.count < settings.maxNumberOfSelections { // Select
@@ -389,10 +423,16 @@ extension PhotosViewController {
                 cell.selectionString = String(photosDataSource.selections.count)
             }
 
-            cell.photoSelected = true
+            if settings.singleChoiceMode {
+                showPreview(indexPath: indexPath)
+            }
+            else {
+                cell.photoSelected = true
+            }
 
             // Update done button
             updateDoneButton()
+            
 
             // Call selection closure
             if let closure = selectionClosure {
@@ -455,7 +495,7 @@ extension PhotosViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         
         if let collectionViewFlowLayout = collectionViewLayout as? GridCollectionViewLayout {
-            let itemSpacing: CGFloat = 2.0
+            let itemSpacing: CGFloat = 1.0
             let cellsPerRow = settings.cellsPerRow(traitCollection.verticalSizeClass, traitCollection.horizontalSizeClass)
             
             collectionViewFlowLayout.itemSpacing = itemSpacing

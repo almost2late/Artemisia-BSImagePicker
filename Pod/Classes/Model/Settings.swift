@@ -45,17 +45,19 @@ final class Settings : BSImagePickerSettings {
     var cellsPerRow: (_ verticalSize: UIUserInterfaceSizeClass, _ horizontalSize: UIUserInterfaceSizeClass) -> Int = {(verticalSize: UIUserInterfaceSizeClass, horizontalSize: UIUserInterfaceSizeClass) -> Int in
         switch (verticalSize, horizontalSize) {
         case (.compact, .regular): // iPhone5-6 portrait
-            return 3
+            return 4
         case (.compact, .compact): // iPhone5-6 landscape
             return 5
         case (.regular, .regular): // iPad portrait/landscape
             return 7
         default:
-            return 3
+            return 4
         }
     }
     
     var takePhotos: Bool = false
     
     var takePhotoIcon: UIImage? = UIImage(named: "add_photo", in: BSImagePickerViewController.bundle, compatibleWith: nil)
+    
+    var singleChoiceMode: Bool = true
 }

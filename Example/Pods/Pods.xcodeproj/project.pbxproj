@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		051836FBCF1F0B1968ABC0F2AA7D123A /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165336F722000CEC831E86805289995C /* PhotoCell.swift */; };
 		092BAC5906218447DCD6B3D773BC6053 /* BSImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6944DB6AFCC06D71D691821A8124487 /* BSImagePickerViewController.swift */; };
+		0E3317EC1EDEF90E00520403 /* nav_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF674341EDEF1CB00B143D4 /* nav_back_button@2x.png */; };
+		0E3317ED1EDEF90E00520403 /* nav_back_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF674351EDEF1CB00B143D4 /* nav_back_button@3x.png */; };
+		0E3317F01EDEF94100520403 /* nav_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF674341EDEF1CB00B143D4 /* nav_back_button@2x.png */; };
+		0E3317F11EDEF94100520403 /* nav_back_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF674351EDEF1CB00B143D4 /* nav_back_button@3x.png */; };
 		11AE74E840F21DB1EDA9C58BE659BA33 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB0F69AB0570C74B8682B858AB298EE /* AlbumCell.swift */; };
 		166F076501AC09D8D5D64CCD0A206C62 /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC4148AD539614460157D5FC94FF75 /* AlbumsViewController.swift */; };
 		18FEDD16A80ACE374EDD4B8DC5205DED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01AFC5762A4310C5AC17337E786B6435 /* Foundation.framework */; };
@@ -131,6 +135,8 @@
 		01AFC5762A4310C5AC17337E786B6435 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		0766A8C1A813A168519E3C740BA2374D /* Pods-BSImagePicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BSImagePicker_Example.release.xcconfig"; sourceTree = "<group>"; };
 		0E90639EF290180C7F0488C2288F82F0 /* Pods-BSImagePicker_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BSImagePicker_Example-frameworks.sh"; sourceTree = "<group>"; };
+		0EF674341EDEF1CB00B143D4 /* nav_back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back_button@2x.png"; sourceTree = "<group>"; };
+		0EF674351EDEF1CB00B143D4 /* nav_back_button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back_button@3x.png"; sourceTree = "<group>"; };
 		0F7593C7000BBBCF28BE394BD944455E /* AlbumTitleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlbumTitleView.swift; sourceTree = "<group>"; };
 		165336F722000CEC831E86805289995C /* PhotoCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		178C7A9BE3CAA64DF6EF2669670B16C6 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Photos.framework; sourceTree = DEVELOPER_DIR; };
@@ -480,6 +486,8 @@
 		C9C399F86AD4DB048EBF5D5244BC9E1C /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0EF674341EDEF1CB00B143D4 /* nav_back_button@2x.png */,
+				0EF674351EDEF1CB00B143D4 /* nav_back_button@3x.png */,
 				8E7A4512D8E2269EC57F59EEFAF9EFDC /* add_photo.png */,
 				59EDC68548593C3594E5ECF4CCBE53D1 /* add_photo@2x.png */,
 				332E00A781E4D31682800A21809F05AF /* add_photo@3x.png */,
@@ -756,7 +764,9 @@
 				7CD9C488F07273664772B1AA302D9D85 /* Albums.storyboard in Resources */,
 				6BF3FD7E196F67E875113F7A02C8638D /* AlbumTitleView.xib in Resources */,
 				729478D168ADD1B98CC3490A8BA646EF /* arrow_down@1x.png in Resources */,
+				0E3317EC1EDEF90E00520403 /* nav_back_button@2x.png in Resources */,
 				49DD0C7E95B1CDB0FFEB5BC2E745BACA /* arrow_down@2x.png in Resources */,
+				0E3317ED1EDEF90E00520403 /* nav_back_button@3x.png in Resources */,
 				F9A148C83D48857A735E90C5C63F2810 /* arrow_down@3x.png in Resources */,
 				A727C60BC069E259ABB379DAB8A91FE2 /* CameraCell.xib in Resources */,
 				21815944ABB24000045394D15631C87F /* PhotoCell.xib in Resources */,
@@ -768,6 +778,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				39CC77EEA7D338BAC4838DF5A0042FA1 /* BSImagePicker.bundle in Resources */,
+				0E3317F01EDEF94100520403 /* nav_back_button@2x.png in Resources */,
+				0E3317F11EDEF94100520403 /* nav_back_button@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
