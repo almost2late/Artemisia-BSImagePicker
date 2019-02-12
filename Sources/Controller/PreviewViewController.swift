@@ -45,7 +45,7 @@ final class PreviewViewController : UIViewController {
     }
     
     func setCustomBackButton() {
-        let image = UIImage(named: "nav_back_button", in: BSImagePickerViewController.bundle, compatibleWith: nil)?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5))
+        let image = UIImage(named: "nav_back_button", in: BSImagePickerViewController.bundle, compatibleWith: nil)?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 3))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image:image, style:.plain, target:self, action:#selector(self.goBack))
         
     }

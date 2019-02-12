@@ -78,7 +78,7 @@ open class BSImagePickerViewController : UINavigationController {
         }
     }
     
-    public func setSendClosure(sendClosure: @escaping ((PHAsset)->())) {
+    @objc public func setSendClosure(sendClosure: @escaping ((PHAsset)->())) {
         photosViewController.sendClosure = sendClosure
     }
     
