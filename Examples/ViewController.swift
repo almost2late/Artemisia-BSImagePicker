@@ -27,19 +27,16 @@ import Photos
 class ViewController: UIViewController {
     
     @IBAction func showImagePicker(_ sender: UIButton) {
-        let vc = BSImagePickerViewController()
-        vc.maxNumberOfSelections = 6
+        let imagePicker = BSImagePickerViewController()
         
-        bs_presentImagePickerController(vc, animated: true,
-            select: { (asset: PHAsset) -> Void in
-                print("Selected: \(asset)")
-            }, deselect: { (asset: PHAsset) -> Void in
-                print("Deselected: \(asset)")
-            }, cancel: { (assets: [PHAsset]) -> Void in
-                print("Cancel: \(assets)")
-            }, finish: { (assets: [PHAsset]) -> Void in
-                print("Finish: \(assets)")
-            }, completion: nil)
+        imagePicker.setSendClosure(sendClosure: { (asset: PHAsset)->Void in
+            imagePicker.dismiss(animated: true, completion: nil)
+        })
+        
+        BSImagePickerViewController.authorize(fromViewController: self) { (authorized) -> Void in
+            guard authorized == true else { return }
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func showCustomImagePicker(_ sender: UIButton) {

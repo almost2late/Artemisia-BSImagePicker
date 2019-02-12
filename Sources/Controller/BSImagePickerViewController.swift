@@ -41,7 +41,7 @@ open class BSImagePickerViewController : UINavigationController {
     /**
      Cancel button
      */
-    @objc open var cancelButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+    @objc open var cancelButton: UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
     
     /**
      Default selections
@@ -78,6 +78,10 @@ open class BSImagePickerViewController : UINavigationController {
         }
     }
     
+    public func setSendClosure(sendClosure: @escaping ((PHAsset)->())) {
+        photosViewController.sendClosure = sendClosure
+    }
+    
     @objc lazy var photosViewController: PhotosViewController = {
         var selections: [PHAsset] = []
         defaultSelections?.enumerateObjects({ (asset, idx, stop) in
@@ -89,14 +93,17 @@ open class BSImagePickerViewController : UINavigationController {
                                       assetStore: assetStore,
                                       settings: self.settings)
         
-        vc.doneBarButton = self.doneButton
         vc.cancelBarButton = self.cancelButton
-        vc.albumTitleView = self.albumTitleView
+        
+        if !self.settings.singleChoiceMode {
+            vc.doneBarButton = self.doneButton
+            vc.albumTitleView = self.albumTitleView
+        }
         
         return vc
     }()
     
-    @objc class func authorize(_ status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus(), fromViewController: UIViewController, completion: @escaping (_ authorized: Bool) -> Void) {
+    @objc public class func authorize(_ status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus(), fromViewController: UIViewController, completion: @escaping (_ authorized: Bool) -> Void) {
         switch status {
         case .authorized:
             // We are authorized. Run block
@@ -148,6 +155,17 @@ open class BSImagePickerViewController : UINavigationController {
 // MARK: ImagePickerSettings proxy
 extension BSImagePickerViewController: BSImagePickerSettings {
 
+    /**
+     Hide done button
+     */
+    public var singleChoiceMode: Bool {
+        get {
+            return settings.singleChoiceMode
+        }
+        set {
+            settings.singleChoiceMode = singleChoiceMode
+        }
+    }
 
     /**
      See BSImagePicketSettings for documentation

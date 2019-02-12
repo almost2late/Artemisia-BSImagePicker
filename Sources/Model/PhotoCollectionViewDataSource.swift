@@ -69,22 +69,28 @@ final class PhotoCollectionViewDataSource : NSObject, UICollectionViewDataSource
         let asset = fetchResult[indexPath.row]
         cell.asset = asset
         
+        let options = PHImageRequestOptions()
+        options.resizeMode = .fast
+        let size = CGSize(width: (CGFloat(asset.pixelWidth)/2), height: (CGFloat(asset.pixelHeight)/2))
+        
         // Request image
-        cell.tag = Int(photosManager.requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: nil) { (result, _) in
+        cell.tag = Int(photosManager.requestImage(for: asset, targetSize: size, contentMode: imageContentMode, options: options) { (result, _) in
             cell.imageView.image = result
         })
         
-        // Set selection number
-        if let index = assetStore.assets.index(of: asset) {
-            if let character = settings?.selectionCharacter {
-                cell.selectionString = String(character)
+        if settings?.singleChoiceMode == false {
+            // Set selection number
+            if let index = assetStore.assets.index(of: asset) {
+                if let character = settings?.selectionCharacter {
+                    cell.selectionString = String(character)
+                } else {
+                    cell.selectionString = String(index+1)
+                }
+                
+                cell.photoSelected = true
             } else {
-                cell.selectionString = String(index+1)
+                cell.photoSelected = false
             }
-            
-            cell.photoSelected = true
-        } else {
-            cell.photoSelected = false
         }
         
         cell.isAccessibilityElement = true

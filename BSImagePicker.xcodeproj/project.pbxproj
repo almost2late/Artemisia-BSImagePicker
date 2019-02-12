@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E10FB882209D8C7008EB668 /* BSImagePicker.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 550A315121D5298400AAF718 /* BSImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0E39E1802213100B00329FF1 /* nav_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E39E17E2213100B00329FF1 /* nav_back_button@2x.png */; };
+		0E39E1812213100B00329FF1 /* nav_back_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E39E17F2213100B00329FF1 /* nav_back_button@3x.png */; };
 		550A315621D5298400AAF718 /* BSImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A315421D5298400AAF718 /* BSImagePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5554729821E4E01700B90CA5 /* AssetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554729721E4E01700B90CA5 /* AssetStore.swift */; };
 		5569D00721D52A6D00D03631 /* BSImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550A315121D5298400AAF718 /* BSImagePicker.framework */; };
@@ -15,7 +18,6 @@
 		5569D02521D52B1B00D03631 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5569D02321D52B1B00D03631 /* Main.storyboard */; };
 		5569D02721D52B1B00D03631 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5569D02621D52B1B00D03631 /* Assets.xcassets */; };
 		5569D02A21D52B1B00D03631 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5569D02821D52B1B00D03631 /* LaunchScreen.storyboard */; };
-		559768C221D5340E00B10102 /* BSImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550A315121D5298400AAF718 /* BSImagePicker.framework */; };
 		559768C821D535DF00B10102 /* BSGridCollectionViewLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BCF8E321D52CAE00386752 /* BSGridCollectionViewLayout.framework */; };
 		559768C921D535DF00B10102 /* BSImageView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BCF8E221D52CAE00386752 /* BSImageView.framework */; };
 		559768CB21D5363A00B10102 /* BSGridCollectionViewLayout.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BCF8E321D52CAE00386752 /* BSGridCollectionViewLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -59,6 +61,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0E10FB892209D8C7008EB668 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 550A314821D5298400AAF718 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 550A315021D5298400AAF718;
+			remoteInfo = BSImagePicker;
+		};
 		5569D00821D52A6D00D03631 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 550A314821D5298400AAF718 /* Project object */;
@@ -94,6 +103,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				559768D021D536DD00B10102 /* BSGridCollectionViewLayout.framework in CopyFiles */,
+				0E10FB882209D8C7008EB668 /* BSImagePicker.framework in CopyFiles */,
 				559768D121D536DD00B10102 /* BSImageView.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +111,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E39E17E2213100B00329FF1 /* nav_back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back_button@2x.png"; sourceTree = "<group>"; };
+		0E39E17F2213100B00329FF1 /* nav_back_button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back_button@3x.png"; sourceTree = "<group>"; };
 		550A315121D5298400AAF718 /* BSImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BSImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		550A315421D5298400AAF718 /* BSImagePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSImagePicker.h; sourceTree = "<group>"; };
 		550A315521D5298400AAF718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -182,7 +194,6 @@
 			files = (
 				559768CD21D5369A00B10102 /* BSGridCollectionViewLayout.framework in Frameworks */,
 				559768CE21D5369A00B10102 /* BSImageView.framework in Frameworks */,
-				559768C221D5340E00B10102 /* BSImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +287,8 @@
 		55BCF8A921D52B4A00386752 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0E39E17E2213100B00329FF1 /* nav_back_button@2x.png */,
+				0E39E17F2213100B00329FF1 /* nav_back_button@3x.png */,
 				55BCF8AE21D52BA200386752 /* add_photo.png */,
 				55BCF8AC21D52BA200386752 /* add_photo@2x.png */,
 				55BCF8B021D52BA200386752 /* add_photo@3x.png */,
@@ -422,6 +435,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0E10FB8A2209D8C7008EB668 /* PBXTargetDependency */,
 			);
 			name = Examples;
 			productName = Examples;
@@ -506,10 +520,12 @@
 				55BCF8B421D52BA200386752 /* arrow_down@2x.png in Resources */,
 				55BCF8B621D52BA200386752 /* arrow_down@1x.png in Resources */,
 				55BCF8B121D52BA200386752 /* arrow_down@3x.png in Resources */,
+				0E39E1802213100B00329FF1 /* nav_back_button@2x.png in Resources */,
 				55BCF8B721D52BA200386752 /* add_photo@3x.png in Resources */,
 				55BCF8B321D52BA200386752 /* add_photo@2x.png in Resources */,
 				55BCF8B221D52BA200386752 /* ICON-LICENSE.txt in Resources */,
 				55BCF8B521D52BA200386752 /* add_photo.png in Resources */,
+				0E39E1812213100B00329FF1 /* nav_back_button@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +613,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0E10FB8A2209D8C7008EB668 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 550A315021D5298400AAF718 /* BSImagePicker */;
+			targetProxy = 0E10FB892209D8C7008EB668 /* PBXContainerItemProxy */;
+		};
 		5569D00921D52A6D00D03631 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 550A315021D5298400AAF718 /* BSImagePicker */;
@@ -754,10 +775,10 @@
 		550A315A21D5298400AAF718 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = Y2NHS7RD78;
+				DEVELOPMENT_TEAM = CB8NVQ8UT6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -783,10 +804,10 @@
 		550A315B21D5298400AAF718 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = Y2NHS7RD78;
+				DEVELOPMENT_TEAM = CB8NVQ8UT6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -861,9 +882,11 @@
 		5569D02D21D52B1B00D03631 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y2NHS7RD78;
+				DEVELOPMENT_TEAM = CB8NVQ8UT6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -875,6 +898,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = se.backslashed.Examples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -883,9 +907,11 @@
 		5569D02E21D52B1B00D03631 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y2NHS7RD78;
+				DEVELOPMENT_TEAM = CB8NVQ8UT6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -897,6 +923,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = se.backslashed.Examples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -44,6 +44,10 @@ final class PhotoCell: UICollectionViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        imageView.contentMode = .scaleAspectFill
+    }
+    
     var selectionString: String {
         get {
             return selectionView.selectionString
@@ -85,8 +89,10 @@ final class PhotoCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         selectionOverlayView.backgroundColor = UIColor.lightGray
+        selectionOverlayView.alpha = 0.0
         selectionOverlayView.translatesAutoresizingMaskIntoConstraints = false
         selectionView.translatesAutoresizingMaskIntoConstraints = false
+        selectionView.alpha = 0.0
         contentView.addSubview(imageView)
         contentView.addSubview(selectionOverlayView)
         contentView.addSubview(selectionView)
