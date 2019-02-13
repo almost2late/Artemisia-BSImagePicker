@@ -352,8 +352,55 @@ extension PhotosViewController {
         return false
     }
     
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? CameraCell else {
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying theCell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = theCell as? PhotoCell {
+            if cell.requestId != 0 {
+                let photosManager = PHCachingImageManager.default()
+                photosManager.cancelImageRequest(PHImageRequestID(cell.requestId))
+            }
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay theCell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = theCell as? PhotoCell {
+            guard let photosDataSource = photosDataSource else { return }
+            let asset = photosDataSource.fetchResult[indexPath.row]
+            cell.asset = asset
+            
+            let options = PHImageRequestOptions()
+            options.resizeMode = .fast
+            options.deliveryMode = .opportunistic
+            
+            var size: CGSize
+            let imageRatio = (CGFloat(asset.pixelWidth)) / (CGFloat(asset.pixelHeight))
+            let softenLoadCoeff:CGFloat = 1.5
+            let screenScale = UIScreen.main.scale / softenLoadCoeff
+            if asset.pixelWidth > asset.pixelHeight {
+                size = CGSize(width: cell.frame.size.height * imageRatio * screenScale, height: cell.frame.size.height * screenScale)
+            }
+            else {
+                size = CGSize(width: cell.frame.size.width * screenScale, height: cell.frame.size.width * screenScale / imageRatio)
+            }
+            
+            let photosManager = PHCachingImageManager.default()
+            
+            // Cancel any pending image requests
+            if cell.requestId != 0 {
+                photosManager.cancelImageRequest(PHImageRequestID(cell.requestId))
+            }
+
+            var requestId = 0
+            requestId = Int(photosManager.requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: options) { (result, dict) in
+                let appropriate = (cell.requestId == requestId)
+                if appropriate {
+                    cell.setImage(result)
+                    cell.requestId = 0
+                }
+            })
+            cell.requestId = requestId
+        }
+        
+        guard let cell = theCell as? CameraCell else {
             return
         }
         

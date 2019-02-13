@@ -30,9 +30,12 @@ final class PhotoCell: UICollectionViewCell {
     static let cellIdentifier = "photoCellIdentifier"
     
     let imageView: UIImageView = UIImageView(frame: .zero)
+    
+    var requestId = 0
 
     private let selectionOverlayView: UIView = UIView(frame: .zero)
     private let selectionView: SelectionView = SelectionView(frame: .zero)
+    private let spinner = UIActivityIndicatorView.init(style: UIActivityIndicatorView.Style.gray)
     
     weak var asset: PHAsset?
     var settings: BSImagePickerSettings {
@@ -42,6 +45,11 @@ final class PhotoCell: UICollectionViewCell {
         set {
             selectionView.settings = newValue
         }
+    }
+    
+    func setImage(_ image: UIImage?) {
+        imageView.image = image
+        spinner.stopAnimating()
     }
     
     override func awakeFromNib() {
@@ -56,6 +64,12 @@ final class PhotoCell: UICollectionViewCell {
         set {
             selectionView.selectionString = newValue
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        spinner.startAnimating()
     }
     
     var photoSelected: Bool = false {
@@ -96,6 +110,9 @@ final class PhotoCell: UICollectionViewCell {
         contentView.addSubview(imageView)
         contentView.addSubview(selectionOverlayView)
         contentView.addSubview(selectionView)
+        contentView.addSubview(spinner)
+        
+        spinner.hidesWhenStopped = true
 
         // Add constraints
         NSLayoutConstraint.activate([
@@ -110,8 +127,13 @@ final class PhotoCell: UICollectionViewCell {
             selectionView.heightAnchor.constraint(equalToConstant: 25),
             selectionView.widthAnchor.constraint(equalToConstant: 25),
             selectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
-            selectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
+            selectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
         ])
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        spinner.center = contentView.center
     }
     
     required init?(coder aDecoder: NSCoder) {
