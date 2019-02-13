@@ -45,7 +45,7 @@ final class Settings : BSImagePickerSettings {
     var cellsPerRow: (_ verticalSize: UIUserInterfaceSizeClass, _ horizontalSize: UIUserInterfaceSizeClass) -> Int = {(verticalSize: UIUserInterfaceSizeClass, horizontalSize: UIUserInterfaceSizeClass) -> Int in
         switch (verticalSize, horizontalSize) {
         case (.compact, .regular): // iPhone5-6 portrait
-            return 3
+            return 5
         case (.compact, .compact): // iPhone5-6 landscape
             return 5
         case (.regular, .regular): // iPad portrait/landscape
