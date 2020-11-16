@@ -198,6 +198,9 @@ final class PhotosViewController : UICollectionViewController {
             shrinkAnimator.sourceImageView = vc.imageView
             shrinkAnimator.destinationImageView = cell.imageView
             
+            // Fix weird crash caused by pushing the same vc twice
+            guard vc.parent == nil else { return }
+            
             navigationController?.pushViewController(vc, animated: true)
         }
     }
